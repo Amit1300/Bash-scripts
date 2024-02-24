@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if system status nginx 1>/dev/null 2>&1; then
+        echo "nginx is runnning"
+        exit 0
+else
+        echo " nginx is not running "
+        systemctl start nginx
+
+
+        sleep 30
+        if systemctl status nginx;then
+                echo " nginx is now runninh"
+        else
+                " echo not running"
+
+        fi
+fi
