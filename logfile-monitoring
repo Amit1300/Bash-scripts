@@ -1,0 +1,21 @@
+#!/bin/bash
+LogFileLocation="/var/log/"
+
+if [[ ! -d ${LogFileLocation} ]]; then
+        echo " your log dir is ${LogFileLocation} is not existing" |  mailx -s "Alert: path not found" nagar.amit1999@gmail.com
+        echo "$?"
+        exit 1
+fi
+
+latestFile=$(ls -lt ${LogFileLocation} | awk 'NR==2 { print $NF}')
+
+if [[ -z ${latestFile} ]];then
+        echo " No file Genernated" |  mailx -s "Alert: no file genernated" nagar.amit1999@gmail.com
+        echo "$?"
+        exit 2
+fi
+creationTime=$(date -r ${LogFileLocation} '+%s')
+presentTime=$(date '+%s')
+ageInSec=$(( presentTime - creationTime ))
+ageInHrs=$(( ageInSec/ 3600 ))
+echo "$ageInHrs"
